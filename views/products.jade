@@ -1,21 +1,14 @@
-doctype html
-html
-  head
-    title My App for Liam
-    link(rel='stylesheet', href='app.css', type='text/css')
-  body
-    .header
-      .imhold
-        img#theLogo.logiIm(alt='logo', src='/logo.png')
-      .navhold
-        .topnav
-          a(href='/') Home
-          a(href='/products.html') Products
-          a(href='#') Add New Product
+extends layout
+block content
     .row
       .holder
         h1
           | Hi Im the products page!
-    .footer
-      p
-        | Liam Made this Node JS Application
+        .grid-container
+            each row in res1
+              .item 
+                h1.itemtitle #{row.Name}
+                img.pimage(src='#{row.Image}', alt='#{row.Image}')
+                p.itemp Price: €#{row.Price}
+                p.itemp ID: #{row.Id}
+                
