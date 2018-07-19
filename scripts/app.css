@@ -1,0 +1,331 @@
+body {
+    background-color: #555;
+    background-image: url("/fitness.jpg");
+    background-repeat:no-repeat;
+    background-size:100% 100%;
+  text-align: center;
+    min-height:900px; /* we will remove this later */
+}
+
+
+
+
+
+.logiIm {
+    width: 60%;
+    
+    
+}  
+
+.imhold{
+    text-align: center;
+    width: 20%;
+    margin-left: auto;
+    margin-right: auto;
+    float: left;
+}
+
+.navhold{
+    text-align: center;
+    width: 80%;
+    margin-left: auto;
+    margin-right: auto;
+    float: left;
+    margin-bottom: 10px;
+    
+}
+
+.holder {
+    text-align: center;
+    width: 90%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+
+/* Add a black background color to the top navigation */
+.topnav {
+    background-color: #ffffff;
+  overflow: auto;
+}
+
+/* Style the links inside the navigation bar */
+.topnav a {
+    float: left;
+    color: #000000;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+    font-size: 17px;
+}
+
+/* Change the color of links on hover */
+.topnav a:hover {
+    background-color: #ddd;
+    color: black;
+}
+
+/* Add a color to the active/current link */
+.topnav a.active {
+    background-color: #4CAF50;
+    color: white;
+}
+
+
+.row {
+    display: -webkit-flex;
+    display: inline-block;
+    width: 100%;
+}
+
+
+.holder {
+    text-align: center;
+    width: 90%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.large {
+    width: 55%;
+     background-image: url('/running.jpg');
+      background-repeat:no-repeat;
+    background-size:cover;
+    float: left;
+    padding:5px;
+    margin-left:10px;
+    height: 610px;
+}
+
+
+.large h1 {
+    margin-bottom: 2px;    
+    font-size: 157px;
+    color: #ffffff;
+}
+
+
+.large h2 {
+    margin-top: 2px;
+    margin-bottom: 2px;
+    font-size: 157px;
+    color: #ffffff;
+}
+
+
+.normal h1 {
+    margin-bottom: 2px;    
+    font-size: 87px;
+    color: #ffffff;
+}
+
+
+.normal h2 {
+    margin-top: 2px;
+    margin-bottom: 2px;
+    font-size: 87px;
+    color: #ffffff;
+}
+
+
+.normal2 h1 {
+    margin-bottom: 2px;    
+    font-size: 87px;
+    color: #ffffff;
+}
+
+
+.normal2 h2 {
+    margin-top: 2px;
+    margin-bottom: 2px;
+    font-size: 87px;
+    color: #ffffff;
+}
+
+.normal {
+    width: 30%;
+     background-image: url('/swimming.jpg');
+      background-repeat:no-repeat;
+    background-size:cover;
+    float: left;
+     padding:5px;
+     height: 300px;
+     margin-left:10px;
+     margin-bottom:10px;
+}
+
+.normal2 {
+    width: 30%;
+     background-image: url('/cycling.jpg');
+      background-repeat:no-repeat;
+    background-size:cover;
+    float: left;
+     padding:5px;
+     height: 300px;
+     margin-left:10px;
+     margin-bottom:10px;
+}
+
+/* Style the footer */
+.footer {
+    background-color: #000000;
+    padding: 10px;
+    text-align: center;
+}
+
+
+.footer p{
+    color: #ffffff;
+}
+
+
+/* Style for products page */
+
+
+.grid-container {
+  display: grid;
+  align-content: center;
+  grid-template-columns: auto auto auto;
+  grid-gap: 10px;
+ /* background-color: #2196F3;  Comment this out later to remove the background color when not needed */
+  padding: 10px;
+}
+
+
+.item {
+  background-color: rgba(255, 255, 255, 0.8);
+  text-align: center;
+  padding: 5px 0;
+ 
+}
+
+
+#itemsContainer {
+    width: 100%;
+    text-align: center;
+    
+    
+}
+
+
+.itemtitle {
+   display: block;
+    color: #4CAF50;
+    text-align: center;
+    padding: 10px 10px;
+    text-decoration: none;
+    font-size: 25px
+    
+}
+
+
+.itemp {
+   display: block;
+    color: #4CAF50;
+    text-align: center;
+    padding: 4px 6px;
+    text-decoration: none;
+    font-size: 16px
+    
+}
+
+
+
+.pimage {
+    width: 30%; 
+    margin-left: auto; 
+    margin-right: auto; 
+    display: block;
+    
+}
+
+
+.button {
+    background-color: #4CAF50;
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+}
+
+
+
+#itemsContainer h2 {
+   display: block;
+    color: #555;
+    text-align: justify;
+    padding: 14px 16px;
+    text-decoration: none;
+    font-size: 20px
+    
+}
+
+
+#itemsContainer h1 {
+   display: block;
+    color: #555;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+   
+    
+}
+
+
+.itemhols {
+   margin: 10px;
+    
+    display: inline-block;
+    width: 100%;
+    
+    min-height: 30px;
+  
+   background-color: #ffffff;
+}
+
+
+
+
+/* End Style for products page */
+
+
+/* Style for form */
+
+input[type=text], select {
+    width: 100%;
+    padding: 12px 20px;
+    margin: 8px 0;
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+input[type=submit] {
+    width: 100%;
+    background-color: #4CAF50;
+    color: white;
+    padding: 14px 20px;
+    margin: 8px 0;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+input[type=submit]:hover {
+    background-color: #45a049;
+}
+
+.formHold {
+    border-radius: 5px;
+    background-color: rgba(255, 255, 255, 0.8);
+    padding: 20px;
+    width:90%;
+}
+
+/* End Style for form */
