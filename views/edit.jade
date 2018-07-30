@@ -1,0 +1,18 @@
+extends layout
+block content
+    .row
+     h1 Welcome Lets Edit This Product
+     .formHold
+       h1.itemtitle Edit the Product Form
+       each row in res1
+        form(method="post")
+         fieldset
+          label(for="newname") Product Name:
+          input(name="newname", type="text", value="#{row.Name}") 
+          label(for="newprice") Product Price:
+          input(name="newprice", type="text", value="#{row.Price}") 
+          label(for="newimage") Product Images:
+          input(name="newimage", type="text", value="#{row.Image}") 
+          label(for="newactivity") Product Activity:
+          input(name="newactivity", type="text", value="#{row.Activity}") 
+          button.button(type="submit") Update The Product

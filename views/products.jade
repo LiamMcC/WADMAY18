@@ -1,0 +1,22 @@
+extends layout
+block content
+    .row
+      .holder
+        h1 Hi Im the products page!
+          .grid-container
+            each row in res1
+             .item
+              h1.itemtitle #{row.Name}
+              img.pimage(src="#{row.Image}", alt="#{row.Image}")
+              p.itemp Price: &euro;#{row.Price}
+              p.itemp Activity: #{row.Activity}
+              a.button(href="/item/#{row.Id}") Show
+              a.button(href="/show/#{row.Id}") Show Kenneth
+              a.button(href="/edit/#{row.Id}") Edit Product
+              a.button(href="/delete/#{row.Id}") Delete #{row.Name}
+              
+              
+
+
+              
+            

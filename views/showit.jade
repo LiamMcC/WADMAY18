@@ -1,0 +1,12 @@
+extends layout
+block content
+    .row
+      .holder
+        h1 Hi Im the products page!
+          .grid-container
+            each row in res1
+             .item
+              h1.itemtitle #{row.Name}
+              img.pimage(src="#{row.Image}", alt="#{row.Image}")
+              p.itemp Price: &euro;#{row.Price}
+              p.itemp Activity: #{row.Activity}

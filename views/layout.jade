@@ -1,0 +1,21 @@
+doctype html
+html
+  head
+    title My App for Liam
+    link(rel='stylesheet', href='../app.css', type='text/css')
+    script(src='https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js')
+  body
+    .header
+      .imhold
+        img#theLogo.logiIm(alt='logo', src='/logo.png')
+      .navhold
+        .topnav
+          a(href='/') Home
+          a(href='/products') Products
+          a(href='/create') New Product
+          a(href='/reviews') See Reviews
+          a(href='/add') Leave Reviews
+    block content
+   .footer
+      p
+        | Liam Made this Node JS Application 2018
