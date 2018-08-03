@@ -8,3 +8,5 @@ block content
             .item
              h1.itemtitle #{review.name}
              p.itemp #{review.content}
+             a.button(href="/editreviews/#{review.id}") Edit #{review.Name}
+             a.button(href="/deletereview/#{review.id}") Delete #{review.Name}

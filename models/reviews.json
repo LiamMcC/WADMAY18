@@ -1,12 +1,7 @@
 [
     {
-        "name": "Liam",
-        "id": 1,
-        "content": "I Like Cornelia's Site"
-    },
-    {
-        "name": "NCI Saturday",
-        "id": 2,
-        "content": "Nice JSON Reviews"
+        "name": "Class",
+        "content": "Nothing like editing JSON",
+        "id": 1
     }
 ]
