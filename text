@@ -1,0 +1,90 @@
+app.get('/editreviews/:id', function(req, res){
+	
+	console.log("Edit page Shown");
+		
+	function chooseProd(indOne){
+		return indOne.id === parseInt(req.params.id);	
+		
+		}
+	console.log("Here Liam" + req.params.id);
+	var indOne = reviews.filter(chooseProd);
+	
+	res.render("editreview",
+						{indOne:indOne}
+						);
+	
+	console.log(indOne);
+	});
+
+
+app.post('/editreviews/:id', function(req, res){
+	var json = JSON.stringify(reviews);
+	
+	var keyToFind = parseInt(req.params.id); // call name from the url
+			
+
+			var data = reviews;
+			var index = data.map(function(review) {return review.id;}).indexOf(keyToFind) // This is the line which lets the app find the right review based on its id
+			var z = parseInt(req.params.id);
+			var x = req.body.name;
+			var y = req.body.content;
+
+			
+			reviews.splice(index, 1 , {name: x, content: y, id: z} );
+			
+			json = JSON.stringify(reviews, null, 4);
+			
+			fs.writeFile('./models/reviews.json', json, 'utf8'); // Writing the data back to the file
+
+// 	})
+	res.redirect("/reviews");
+});
+
+
+// End JSON
+
+
+
+// new delete
+app.get('/deletereview/:id', function(req, res) {
+  
+  var json = JSON.stringify(reviews); // this is to Convert it from an object to string with stringify for use below
+  
+  
+ fs.readFile('./models/reviews.json', 'utf8', function readFileCallback(err, data){
+    if (err){
+        console.log(err);
+    } else {
+      
+
+var keytoFind = req.params.id; // find the review by id
+
+      var str2 = reviews; // this changes the json to a variable str2
+
+var data = str2; //this declares data = str2
+var index2 = data.map(function(d) { return d['id']; }).indexOf(keytoFind) // finds the position by id see jsfiddle for example http://jsfiddle.net/hxfdZ/
+
+// console.log("Liam the position is " + index2 + "    " + keytoFind) Optional log the position to the console
+     
+  
+reviews.splice(index2 ,1); // deletes one item from position represented by index 2 (its position) from above
+       
+       
+
+   json = JSON.stringify(reviews, null, 4); //convert it back to json
+    fs.writeFile('./models/reviews.json', json, 'utf8'); // write it back 
+  console.log("Review Deleted");
+    
+
+  
+}});
+
+
+
+res.redirect("/reviews");
+});
+
+
+
+             a.button(href="/editreviews/#{review.id}") Edit #{review.Name}
+             a.button(href="/deletereview/#{review.id}") Delete #{review.Name}

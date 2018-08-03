@@ -1,0 +1,12 @@
+extends layout
+block content
+    .row
+     h1 Hi, Please Log-In to your account 
+     .formHold
+      form(method="post")
+        fieldset
+         label(for="name") User Name:
+         input(name="name", type="text", placeholder="Who Are You") 
+         label(for="password") Password Address:
+         input(name="password", type="text", placeholder="Please enter a password")
+         button.button(type="submit") Log-In

@@ -1,0 +1,14 @@
+extends layout
+block content
+    .row
+     h1 Hi, Please create an account
+     .formHold
+      form(method="post")
+        fieldset
+         label(for="name") User Name:
+         input(name="name", type="text", placeholder="Who Are You") 
+         label(for="email") Email Address:
+         input(name="email", type="text", placeholder="whats your email address") 
+         label(for="password") Email Address:
+         input(name="password", type="text", placeholder="Please enter a password")
+         button.button(type="submit") Create Account

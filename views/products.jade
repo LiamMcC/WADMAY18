@@ -15,6 +15,13 @@ block content
               a.button(href="/edit/#{row.Id}") Edit Product
               a.button(href="/delete/#{row.Id}") Delete #{row.Name}
               
+      h1 Here are the reviews of our website!
+         .grid-container
+           each review in reviews
+            .item
+             h1.itemtitle #{review.name}
+             p.itemp #{review.content}
+              
               
 
 

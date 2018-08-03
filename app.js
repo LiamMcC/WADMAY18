@@ -5,8 +5,14 @@ const VIEWS = path.join(__dirname, 'views');
 var fs = require('fs');
 app.set('view engine', 'jade');
 
+var session = require('express-session');
+
 var bodyParser = require("body-parser");
 app.use(bodyParser.urlencoded({extended: true}));
+
+
+var cookieParser = require('cookie-parser')
+app.use(cookieParser())
 
 
 var mysql = require('mysql'); // allow access to sql
@@ -18,6 +24,10 @@ app.use(express.static("models"));
 //var products = require("./model/products.json"); // allow the app to access the revis.json file
 
 var reviews = require("./models/reviews.json")
+
+
+app.use(session({ secret: "topsecret" })); // Requird to make the session accessable throughouty the application
+
 
 const db = mysql.createConnection({
  
@@ -53,6 +63,19 @@ app.get('/createtable', function(req,res){
   res.send("Table Creater .... Thanks Gavin!")
  
 });
+
+
+app.get('/createusertable', function(req,res){
+ let sql = 'CREATE TABLE users (Id int NOT NULL AUTO_INCREMENT PRIMARY KEY, Name varchar(255), Email varchar(255), Password varchar(255));'
+ let query = db.query(sql,(err,res)=>{
+  if (err) throw err;
+  console.log(res);
+  
+ });
+  res.send("Table Created .... users available!")
+ 
+});
+
 
 
 // End create table 
@@ -99,6 +122,7 @@ app.get('/', function(req, res){
  // res.send("Hello cruel world!"); // This is commented out to allow the index view to be rendered
   res.render('index', {root: VIEWS});
   console.log("Now you are home!");
+  console.log("The Status of this user is " + req.session.email); // Log out the session value
 });
 
 // function to render the products page
@@ -109,10 +133,10 @@ app.get('/products', function(req, res){
   if(err)
   throw(err);
  
-  res.render('products', {root: VIEWS, res1}); // use the render command so that the response object renders a HHTML page
+  res.render('products', {root: VIEWS, res1, reviews}); // use the render command so that the response object renders a HHTML page
   
  });
- 
+ console.log("The Status of this user is " + req.session.email); // Log out the session value
  console.log("Now you are on the products page!");
 });
 
@@ -178,6 +202,7 @@ res.render('index', {root: VIEWS});
 
  // function to edit database adta based on button press and form
 app.get('/edit/:id', function(req, res){
+ if(req.session.email == "LoggedIn"){
  // res.send("Hello cruel world!"); // This is commented out to allow the index view to be rendered
  let sql = 'SELECT * FROM products WHERE Id = "'+req.params.id+'";'
  let query = db.query(sql, (err, res1) =>{
@@ -187,6 +212,13 @@ app.get('/edit/:id', function(req, res){
   res.render('edit', {root: VIEWS, res1}); // use the render command so that the response object renders a HHTML page
   
  });
+ 
+ }
+ 
+ else {
+  res.render('login', {root:VIEWS});
+  
+ }
  
  console.log("Now you are on the edit product page!");
 });
@@ -293,94 +325,168 @@ app.post('/add', function(req, res){
 
 
 
+// Page to render edit review 
+
+// This function filters the reviews by looking for any review which has an Id the same as the one passed in the url
 
 app.get('/editreviews/:id', function(req, res){
-	
-	console.log("Edit page Shown");
-		
-	function chooseProd(indOne){
-		return indOne.id === parseInt(req.params.id);	
-		
-		}
-	console.log("Here Liam" + req.params.id);
-	var indOne = reviews.filter(chooseProd);
-	
-	res.render("editreview",
-						{indOne:indOne}
-						);
-	
-	console.log(indOne);
-	});
+ function chooseProd(indOne){
+   return indOne.id === parseInt(req.params.id)
+  
+ }
+ 
+ console.log("Id of this review is " + req.params.id);
+ // declare a variable called indOne which is a filter of reviews based on the filtering function above 
+  var indOne = reviews.filter(chooseProd);
+ // pass the filtered JSON data to the page as indOne
+ res.render('editreview' , {indOne:indOne});
+  console.log("Edit Review Page Shown");
+ });
 
 
+// end Page to edit review 
+
+// Create post request to edit the individual review
 app.post('/editreviews/:id', function(req, res){
-	var json = JSON.stringify(reviews);
-	
-	var keyToFind = parseInt(req.params.id); // call name from the url
-			
+ var json = JSON.stringify(reviews);
+ var keyToFind = parseInt(req.params.id); // Id passed through the url
+ var data = reviews; // declare data as the reviews json file
+ var index = data.map(function(review){review.id}).keyToFind // use the paramater passed in the url as a pointer to find the correct review to edit
+  //var x = req.body.name;
+ var y = req.body.content
+ var z = parseInt(req.params.id)
+ reviews.splice(index, 1, {name: req.body.name, content: y, id: z});
+ json = JSON.stringify(reviews, null, 4);
+ fs.writeFile('./models/reviews.json', json, 'utf8'); // Write the file back
+ res.redirect("/reviews");
+});
 
-			var data = reviews;
-			var index = data.map(function(review) {return review.id;}).indexOf(keyToFind) // This is the line which lets the app find the right review based on its id
-			var z = parseInt(req.params.id);
-			var x = req.body.name;
-			var y = req.body.content;
+// end post request to edit the individual review
 
-			
-			reviews.splice(index, 1 , {name: x, content: y, id: z} );
-			
-			json = JSON.stringify(reviews, null, 4);
-			
-			fs.writeFile('./models/reviews.json', json, 'utf8'); // Writing the data back to the file
+// route to delete review
 
-// 	})
-	res.redirect("/reviews");
+
+
+// end route to delete review
+
+app.get('/deletereview/:id', function(req, res){
+ var json = JSON.stringify(reviews);
+ 
+ var keyToFind = parseInt(req.params.id); // Id passed through the url
+ 
+ var data = reviews;
+ 
+ var index = data.map(function(d){d['id'];}).indexOf(keyToFind)
+ 
+ reviews.splice(index, 1);
+ 
+ json = JSON.stringify(reviews, null, 4);
+ fs.writeFile('./models/reviews.json', json, 'utf8'); // Write the file back
+ res.redirect("/reviews");
+ 
 });
 
 
-// End JSON
+// Search function 
 
-
-
-// new delete
-app.get('/deletereview/:id', function(req, res) {
+app.post('/search', function(req, res){
+ 
+ let sql = 'SELECT * FROM products WHERE name LIKE "%'+req.body.search+'%";'
+ let query = db.query(sql, (err,res1) =>{
+  if(err)
+  throw(err);
+ // res.redirect("/error")
   
-  var json = JSON.stringify(reviews); // this is to Convert it from an object to string with stringify for use below
-  
-  
- fs.readFile('./models/reviews.json', 'utf8', function readFileCallback(err, data){
-    if (err){
-        console.log(err);
-    } else {
-      
+  res.render('products', {root: VIEWS, res1});
+  console.log("Nice Search Liam")
+ });
 
-var keytoFind = req.params.id; // find the review by id
+ 
+});
 
-      var str2 = reviews; // this changes the json to a variable str2
-
-var data = str2; //this declares data = str2
-var index2 = data.map(function(d) { return d['id']; }).indexOf(keytoFind) // finds the position by id see jsfiddle for example http://jsfiddle.net/hxfdZ/
-
-// console.log("Liam the position is " + index2 + "    " + keytoFind) Optional log the position to the console
-     
-  
-reviews.splice(index2 ,1); // deletes one item from position represented by index 2 (its position) from above
-       
-       
-
-   json = JSON.stringify(reviews, null, 4); //convert it back to json
-    fs.writeFile('./models/reviews.json', json, 'utf8'); // write it back 
-  console.log("Review Deleted");
-    
-
-  
-}});
+// end search function
 
 
 
-res.redirect("/reviews");
+// *************************************** Log / log-out in and registration functions ************************************** //
+
+
+// Render register page 
+app.get('/register', function(req, res){
+ 
+ res.render('register', {root:VIEWS});
+ 
+});
+
+// stick user into database 
+
+app.post('/register', function(req, res){
+
+db.query('INSERT INTO users (Name, Email, Password) VALUES ("'+req.body.name+'", "'+req.body.email+'", "'+req.body.password+'")' 
+   );
+   req.session.email =  "LoggedIn";   
+  // req.session.who =  req.body.name;
+       res.redirect('/');   
 });
 
 
+// Render login page 
+app.get('/login', function(req, res){
+ 
+ res.render('login', {root:VIEWS});
+ 
+});
+
+
+
+app.post('/login', function(req,res){
+ var whichOne = req.body.name; // What doe the user type in the name text box
+ var whichPass = req.body.password; // What doe the user type in the password text box
+ 
+ let sql2 = 'Select name, password FROM users WHERE name = "'+req.body.name+'"'
+ let query = db.query(sql2, (err, res2) =>{
+  
+  if(err) throw(err);
+  console.log(res2);
+  
+  var passx = res2[0].password;
+  var passxn = res2[0].name;
+  
+  req.session.email = "LoggedIn"
+  
+  
+  if(passx == whichPass){
+  res.redirect("/products");
+  console.log("You Logged in as Password " + passx + " and username " + passxn )
+  }
+  
+  else{
+   
+   
+  }
+  
+  
+ });
+  
+ 
+ 
+});
+
+
+
+// Log Out Route 
+
+app.get('/logout', function(req, res){
+ res.render('index', {root:VIEWS});
+ req.session.destroy(session.email);
+ 
+})
+
+// end logout route 
+
+
+
+// *************************************** Log / log-out in and registration functions ************************************** //
 
  
 // We need to set the requirements for teh application to run

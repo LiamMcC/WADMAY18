@@ -15,7 +15,14 @@ html
           a(href='/create') New Product
           a(href='/reviews') See Reviews
           a(href='/add') Leave Reviews
+          a(href='/register') Register
+          a(href='/login') Log-In
+          a(href='/logout') Log-Out
     block content
    .footer
       p
         | Liam Made this Node JS Application 2018
+      form(method="post" action="search")
+        label(for="search") Search:
+        input(name="search", type="text", Placeholder="Search for....") 
+        button.button(type="submit") Search

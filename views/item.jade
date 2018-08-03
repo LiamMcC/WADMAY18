@@ -8,7 +8,7 @@ block content
             each row in res1
              .item
               h1.itemtitle #{row.Name}
-              img.pimage(src="#{row.Image}", alt="#{row.Image}")
+              img.pimage(src="../images/#{row.Image}", alt="#{row.Image}")
               p.itemp Price: &euro;#{row.Price}
               p.itemp Activity: #{row.Activity}
               p If you click on me, I will disappear.
